@@ -3,6 +3,7 @@
 Shell and CLI Tooling configuration
 
 * bashrc
+
   :PROPERTIES:
   :header-args: :tangle ~/.bashrc
   :END:
@@ -67,6 +68,17 @@ Shell and CLI Tooling configuration
 
   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "~/.bashrc")
     alias pbcopy='xclip -selection clipboard'
+  #+END_SRC
+
+**** rbenv
+
+  Instantiate rbenv if it's installed
+
+  #+BEGIN_SRC sh :tangle ~/.bashrc
+    if [ -d "$HOME/.rbenv/bin" ] ; then
+      export PATH="$HOME/.rbenv/bin:$PATH"
+      eval "$(rbenv init -)"
+    fi
   #+END_SRC
 
 *** Git aliases
