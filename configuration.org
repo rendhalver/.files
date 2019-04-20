@@ -523,9 +523,9 @@ Shell and CLI Tooling configuration
 
   #+BEGIN_SRC conf
     [user]
-      name = Aaron Kuehler
-      email = aaron.kuehler@gmail.com
-      signingkey = 9E3E4C59E2694215
+      name = Pete Brown
+      email = rendhalver@users.noreply.github.com
+      signingkey = 68562E51A2002F1B
   #+END_SRC
 
 *** Github Credentials
