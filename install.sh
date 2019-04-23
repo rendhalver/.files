@@ -11,7 +11,7 @@ function clone_or_update_repo() {
         git pull
     else
         echo "Installing dotfiles to: $DOTFILES_HOME"
-        git clone git@github.com:indiebrain/.files.git $DOTFILES_HOME
+        git clone git@github.com:rendhalver/.files.git $DOTFILES_HOME
         cd $DOTFILES_HOME
     fi
 }
