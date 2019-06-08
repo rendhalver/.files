@@ -3,7 +3,6 @@
 Shell and CLI Tooling configuration
 
 * bashrc
-
   :PROPERTIES:
   :header-args: :tangle ~/.bashrc
   :END:
