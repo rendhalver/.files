@@ -439,7 +439,7 @@ Shell and CLI Tooling configuration
 ** go
 
    #+BEGIN_SRC sh
-     export GOPATH=$HOME/Developer/go
+     export GOPATH=$HOME/Projects/go
      export PATH=$PATH:$GOPATH/bin
    #+END_SRC
 ** Departure
