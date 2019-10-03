@@ -40,6 +40,14 @@ Shell and CLI Tooling configuration
      export PATH=$PATH:$HOME/bin
    #+END_SRC
 
+*** tetex binaries
+    MacTex doesn't put it's binaries in a useful path.
+    This just adds that path to our PATH
+
+    #+BEGIN_SRC sh
+      export PATH=$PATH:/usr/local/texlive/2019/bin/x86_64-darwin
+    #+END_SRC
+
 ** Aliases
 
 *** *nix aliases
