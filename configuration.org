@@ -102,6 +102,14 @@ Shell and CLI Tooling configuration
      alias gl='git log --graph --oneline --decorate --max-count 10'
    #+END_SRC
 
+*** Kube aliases
+
+   Setup k as an alias for kubectl
+
+   #+BEGIN_SRC sh
+     alias k="kubectl"
+   #+END_SRC
+
 ** Prompt
 
   Configure the shell prompt. This happens to check if we're in a git
@@ -457,12 +465,12 @@ Shell and CLI Tooling configuration
      export DISABLE_DEPARTURE=1
    #+END_SRC
 
-** Power
+** Kubernetes
 
-   Source in the power user credentials/secrets
+   Source in the Kube configurations
    #+BEGIN_SRC sh
-     if [ -f ~/credentials/.power ]
-     then source ~/credentials/.power
+     if [ -f ~/credentials/.kube ]
+     then source ~/credentials/.kube
      fi
    #+END_SRC
 
