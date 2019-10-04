@@ -1,0 +1,150 @@
+#+TITLE: Computamatron setup
+
+Setup and maintain software on my various laptops
+
+* install
+  :PROPERTIES:
+  :header-args: :tangle yes
+  :END:
+
+** Set our OS type
+
+   Set our OS type so we can use it to download binaries
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     OS_TYPE='linux-amd64'
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     OS_TYPE='darwin-amd64'
+   #+END_SRC
+
+ ** install homebrew
+
+   Install homebrew if we are on a Mac so we can install everything else
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     if ! [ -x "$(command -v brew)" ]; then
+       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+     fi
+     brew update
+   #+END_SRC
+
+** Global base dependencies
+
+   Define the list of applications we need for pretty much everything on all platforms
+
+   #+BEGIN_SRC sh
+     GLOBAL_DEP_LIST='automake autoconf libtool unzip curl'
+   #+END_SRC
+
+** base dependencies
+
+   Define the list of applications we need for each platform
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     DEP_LIST='git libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev'
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     DEP_LIST='wget readline ncurses openssl libyaml libxslt libffi unixodbc'
+   #+END_SRC
+
+** Install dependencies
+
+   Install the dependencies we defined earlier
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     sudo apt install ${GLOBAL_DEP_LIST} ${DEP_LIST}
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     brew install ${GLOBAL_DEP_LIST} ${DEP_LIST}
+   #+END_SRC
+
+** Install Keybase
+
+   Install Keybase
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     if [ $(which keybase) ]; then
+       echo "keybase already installed"
+     else
+       brew install keybase
+     fi
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     if [ $(which keybase) ]; then
+       echo "keybase already installed"
+     else
+       echo "installing keybase"
+       curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
+       sudo dpkg -i keybase_amd64.deb
+       sudo apt-get install -f
+       run_keybase
+     fi
+   #+END_SRC
+
+** Install Docker
+
+   Make sure we have Docker installed
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     if [ $(which docker) ]; then
+       echo "docker already installed"
+     else
+       brew cask install docker-edge
+     fi
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     if [ -e /etc/apt/sources.list.d/docker.list ]; then
+       echo "docker repo already setup"
+     else
+       echo "installing docker"
+       sudo apt-get remove docker docker-engine docker.io containerd runc
+       curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+       echo "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" > sudo cat - > /apt/sources.list.d/docker.list
+       sudo apt install docker-ce docker-ce-cli containerd.io
+       sudo usermod -aG docker $USER
+     fi
+   #+END_SRC
+
+** Install asdf
+
+   Install asdf and the plugins we would like
+
+   #+BEGIN_SRC sh
+     ASDF_DIR=$HOME/.asdf
+     if [ -e $ASDF_DIR ]; then
+       echo "Updating $ASDF_DIR"
+       asdf update
+     else
+       echo "Installing ASDF"
+       git clone https://github.com/asdf-vm/asdf.git $ASDF_DIR
+       cd $ASDF_DIR
+       git checkout "$(git describe --abbrev=0 --tags)"
+     fi
+     ASDF_PLUGINS='ruby'
+     for plugin in $ASDF_PLUGINS; do
+       if [ -e $ASDF_DIR/plugins/$plugin ]; then
+         echo "asdf $plugin plugin already installed"
+         asdf plugin-update $plugin
+       else
+         echo "installing asdf $plugin plugin"
+         asdf plugin-add $plugin
+       fi
+     done
+   #+END_SRC
+
+** Install Kind
+
+   Make sure Kind is installed so we can run a local Kubernetes cluster
+
+   #+BEGIN_SRC sh
+     KIND_VERSION='v0.5.1'
+     curl -Lo /tmp/kind-${KIND_VERSION} https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${OS_TYPE}
+     chmod +x /tmp/kind-${KIND_VERSION}
+     mv /tmp/kind-${KIND_VERSION} /usr/local/bin/kind
+   #+END_SRC

@@ -34,6 +34,11 @@ function tangle_files() {
                      (find-file (expand-file-name file \"$DIR\"))
                      (org-babel-tangle)
                      (kill-buffer)) '($FILES)))"
+
+    if [ -e $PWD/setup.org ]; then
+        echo "Running setup"
+        bash ./setup.sh
+    fi
 }
 
 clone_or_update_repo
