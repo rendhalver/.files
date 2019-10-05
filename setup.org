@@ -19,7 +19,7 @@ Setup and maintain software on my various laptops
      OS_TYPE='darwin-amd64'
    #+END_SRC
 
- ** install homebrew
+** install homebrew
 
    Install homebrew if we are on a Mac so we can install everything else
 
@@ -28,6 +28,16 @@ Setup and maintain software on my various laptops
        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
      fi
      brew update
+   #+END_SRC
+
+** install jq
+
+   Install jq so we can use it to parse brew info data
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     if ! [ -x "$(command -v jq)" ]; then
+       brew install jq
+     fi
    #+END_SRC
 
 ** Global base dependencies
@@ -43,23 +53,36 @@ Setup and maintain software on my various laptops
    Define the list of applications we need for each platform
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     DEP_LIST='git libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev'
+     DEP_LIST="$GLOBAL_DEP_LIST git libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev"
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     DEP_LIST='wget readline ncurses openssl libyaml libxslt libffi unixodbc'
+     DEP_LIST="$GLOBAL_DEP_LIST wget readline ncurses openssl libyaml libxslt libffi unixodbc"
    #+END_SRC
 
 ** Install dependencies
 
    Install the dependencies we defined earlier
 
+   #+BEGIN_SRC sh
+     for app in $DEP_LIST; do
+   #+END_SRC
+
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     sudo apt install ${GLOBAL_DEP_LIST} ${DEP_LIST}
+       sudo apt install $app
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     brew install ${GLOBAL_DEP_LIST} ${DEP_LIST}
+       if [ "$( brew info --json=v1 $app | jq .[0].installed[].version )" == "" ]; then
+         echo "installing $app"
+         brew install $app
+       else
+         echo "$app installed"
+       fi
+   #+END_SRC
+
+   #+BEGIN_SRC sh
+     done
    #+END_SRC
 
 ** Install Keybase
