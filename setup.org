@@ -32,11 +32,21 @@ Setup and maintain software on my various laptops
 
 ** install jq
 
-   Install jq so we can use it to parse brew info data
+   Install jq so we can use it to parse json data
+
+   #+BEGIN_SRC sh
+     if ! [ -x "$(command -v jq)" ]; then
+   #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     if ! [ -x "$(command -v jq)" ]; then
        brew install jq
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+       sudo apt install jq
+   #+END_SRC
+
+   #+BEGIN_SRC sh
      fi
    #+END_SRC
 
