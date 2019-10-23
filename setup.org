@@ -19,17 +19,6 @@ Setup and maintain software on my various laptops
      OS_TYPE='darwin-amd64'
    #+END_SRC
 
-** install homebrew
-
-   Install homebrew if we are on a Mac so we can install everything else
-
-   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     if ! [ -x "$(command -v brew)" ]; then
-       ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-     fi
-     brew update
-   #+END_SRC
-
 ** install jq
 
    Install jq so we can use it to parse json data
@@ -63,7 +52,7 @@ Setup and maintain software on my various laptops
    Define the list of applications we need for each platform
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     DEP_LIST="$GLOBAL_DEP_LIST git libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev"
+     DEP_LIST="$GLOBAL_DEP_LIST libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev"
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")

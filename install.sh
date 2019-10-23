@@ -4,6 +4,31 @@
 
 DOTFILES_HOME=$HOME/.files
 
+function bootstrap() {
+    if [[ $OSTYPE == darwin?? ]]; then
+        # make sure brew is installed when we are running on darwin
+        if ! [ -x "$(command -v brew)" ]; then
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        fi
+        brew update
+        # install emacs if it's not installed
+        if [ -x "$(command -v emacs)" ]; then
+            brew cask install emacs
+            brew install emacs
+        fi
+    else
+        # install emacs if it's not installed
+        if [ -x "$(command -v emacs)" ]; then
+            sudo apt install emacs
+        fi
+        # Install git so we can checkout our repo
+        if [ -x "$(command -v git)" ]; then
+            sudo apt install git
+        fi
+    fi
+
+}
+
 function clone_or_update_repo() {
     if [ -e $DOTFILES_HOME ]; then
         echo "Updating $DOTFILES_HOME"
@@ -41,6 +66,7 @@ function tangle_files() {
     fi
 }
 
+bootstrap
 clone_or_update_repo
 tangle_files
 
