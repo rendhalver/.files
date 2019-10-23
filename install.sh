@@ -11,6 +11,7 @@ function bootstrap() {
             ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
         fi
         brew update
+        brew tap homebrew/cask-versions
         # install emacs if it's not installed
         if [ -x "$(command -v emacs)" ]; then
             brew cask install emacs

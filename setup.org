@@ -84,6 +84,21 @@ Setup and maintain software on my various laptops
      done
    #+END_SRC
 
+** Install Brew Cask Applications
+
+   Install the apps we using regularly on MacOS
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     CASK_LIST="1password-beta alfred arq balenaetcher flux firefox-nightly firefox-beta firefox-developer-edition gitify gpg-suite-nightly iterm2-nightly keepassxc libreoffice riot slack-beta spotify standard-notes tresorit virtualbox virtualbox-extension-pack xquartz zoomus"
+     for app in $CASK_LIST; do
+       if [ ! "$( brew cask list | grep $app )" ]; then
+         echo "$app not installed"
+         echo "installing $app"
+         brew cask install $app
+       fi
+     done
+   #+END_SRC
+
 ** Install Keybase
 
    Install Keybase
