@@ -107,7 +107,7 @@ Setup and maintain software on my various laptops
      if [ $(which keybase) ]; then
        echo "keybase already installed"
      else
-       brew install keybase
+       brew cask install keybase
      fi
    #+END_SRC
 
