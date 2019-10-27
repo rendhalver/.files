@@ -89,7 +89,7 @@ Setup and maintain software on my various laptops
    Install the apps we using regularly on MacOS
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     CASK_LIST="1password-beta alfred arq balenaetcher flux firefox-nightly firefox-beta firefox-developer-edition gitify gpg-suite-nightly iterm2-nightly keepassxc libreoffice riot slack-beta spotify standard-notes tresorit virtualbox virtualbox-extension-pack xquartz zoomus"
+     CASK_LIST="1password-beta alfred arq balenaetcher flux firefox-nightly firefox-beta firefox-developer-edition gitify gpg-suite-nightly iterm2-nightly keepassxc libreoffice private-internet-access razer-synapse riot setapp slack-beta spotify standard-notes tresorit virtualbox virtualbox-extension-pack xquartz zoomus"
      for app in $CASK_LIST; do
        if [ ! "$( brew cask list | grep $app )" ]; then
          echo "$app not installed"
@@ -128,7 +128,7 @@ Setup and maintain software on my various laptops
    Make sure we have Docker installed
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     if [ $(which docker) ]; then
+     if [ ! "$( brew cask list | grep docker-edge )" ]; then
        echo "docker already installed"
      else
        brew cask install docker-edge
