@@ -13,14 +13,14 @@
 ** Automated from the web with cURL
 
   #+BEGIN_SRC sh
-    curl -L https://github.com/indiebrain/.files/raw/master/install.sh | sh
+    curl -L https://github.com/rendhalver/.files/raw/master/install.sh | sh
   #+END_SRC
 
 
 ** Manually
 
    #+BEGIN_SRC sh
-     $ git clone git@github.com:indiebrain/.files.git ~/.files
+     $ git clone git@github.com:rendhalver/.files.git ~/.files
      $ cd ~/.files
      $ ./install.sh
    #+END_SRC
