@@ -128,7 +128,7 @@ Setup and maintain software on my various laptops
    Make sure we have Docker installed
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     if [ ! "$( brew cask list | grep docker-edge )" ]; then
+     if [ "$( brew cask list | grep 'docker-edge' )" ]; then
        echo "docker already installed"
      else
        brew cask install docker-edge
