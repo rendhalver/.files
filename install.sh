@@ -18,7 +18,8 @@ function bootstrap() {
             brew install emacs
         fi
         # install needed binaries for my emacs setup
-        for dep in 'the_silver_searcher'; do
+        EMACS_DEPS='aspell the_silver_searcher'
+        for dep in $EMACS_DEPS; do
           if [ "$( brew info --json=v1 $dep | jq .[0].installed[].version )" == "" ]; then
             echo "installing $dep"
             brew install $dep
