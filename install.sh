@@ -17,6 +17,15 @@ function bootstrap() {
             brew cask install emacs
             brew install emacs
         fi
+        # install needed binaries for my emacs setup
+        for dep in 'the_silver_searcher'; do
+          if [ "$( brew info --json=v1 $dep | jq .[0].installed[].version )" == "" ]; then
+            echo "installing $dep"
+            brew install $dep
+          else
+            echo "$dep installed"
+          fi
+        done
     else
         # install emacs if it's not installed
         if [ -x "$(command -v emacs)" ]; then
