@@ -181,7 +181,18 @@ Setup and maintain software on my various laptops
 
    #+BEGIN_SRC sh
      KIND_VERSION='v0.5.1'
-     curl -Lo /tmp/kind-${KIND_VERSION} https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${OS_TYPE}
-     chmod +x /tmp/kind-${KIND_VERSION}
-     mv /tmp/kind-${KIND_VERSION} /usr/local/bin/kind
+     if [ $( which kind ) ]; then
+         INSTALLED_KIND=$( kind version )
+     else
+         INSTALLED_KIND=''
+     fi
+
+     if [ "$INSTALLED_KIND" == "$KIND_VERSION" ]; then
+       echo "kind $KIND_VERSION already installed"
+     else
+       echo "installing kind version $KIND_VERSION"
+       curl -Lo /tmp/kind-${KIND_VERSION} https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${OS_TYPE}
+       chmod +x /tmp/kind-${KIND_VERSION}
+       mv /tmp/kind-${KIND_VERSION} /usr/local/bin/kind
+     fi
    #+END_SRC
