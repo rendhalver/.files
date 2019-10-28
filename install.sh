@@ -13,9 +13,15 @@ function bootstrap() {
         brew update
         brew tap homebrew/cask-versions
         # install emacs if it's not installed
-        if [ -x "$(command -v emacs)" ]; then
-            brew cask install emacs
+        if [ "$( brew info --json=v1 emacs | jq .[0].installed[].version )" == "" ]; then
             brew install emacs
+        else
+            echo "emacs already installed"
+        fi
+        if [ ! "$( brew cask list | grep emacs )" ]; then
+            brew cask install emacs
+        else
+            echo "emacs cask already installed"
         fi
         # install needed binaries for my emacs setup
         EMACS_DEPS='aspell the_silver_searcher'
