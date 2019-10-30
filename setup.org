@@ -32,7 +32,7 @@ Setup and maintain software on my various laptops
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-       sudo apt install jq
+       sudo apt install -y jq
    #+END_SRC
 
    #+BEGIN_SRC sh
@@ -68,7 +68,7 @@ Setup and maintain software on my various laptops
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-       sudo apt install $app
+       sudo apt install -y $app
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
@@ -150,7 +150,7 @@ Setup and maintain software on my various laptops
        sudo apt-get remove docker docker-engine docker.io containerd runc
        curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
        echo "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" > sudo cat - > /apt/sources.list.d/docker.list
-       sudo apt install docker-ce docker-ce-cli containerd.io
+       sudo apt install -y docker-ce docker-ce-cli containerd.io
        sudo usermod -aG docker $USER
      fi
    #+END_SRC
