@@ -5,7 +5,7 @@
 DOTFILES_HOME=$HOME/.files
 
 function bootstrap() {
-    if [[ $OSTYPE == darwin?? ]]; then
+    if [[ $OSTYPE =~ ^darwin ]]; then
         # make sure brew is installed when we are running on darwin
         if ! [ -x "$(command -v brew)" ]; then
             ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
