@@ -49,7 +49,7 @@ Setup and maintain software on my various laptops
 
 ** base dependencies
 
-   Define the list of applications we need for each platform
+   Define the list of dependencies we need for each platform
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
      DEP_LIST="$GLOBAL_DEP_LIST libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev"
@@ -84,12 +84,53 @@ Setup and maintain software on my various laptops
      done
    #+END_SRC
 
+** Applications
+
+   Define the list of applications we need for each platform
+
+   #+BEGIN_SRC sh :tangle
+     BASE_APP_LIST="ansible awscli dos2unix"
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     APP_LIST="${BASE_APP_LIST} default-mysql-client"
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+     APP_LIST="${BASE_APP_LIST} mysql-client exercism terraform kubernetes-cli kubernetes-helm kubectx helmfile etcd"
+     CASK_LIST="1password-beta alfred arq balenaetcher flux firefox-nightly firefox-beta firefox-developer-edition gitify gpg-suite-nightly iterm2-nightly keepassxc libreoffice private-internet-access razer-synapse riot setapp slack-beta spotify standard-notes tresorit virtualbox virtualbox-extension-pack xquartz zoomus"
+   #+END_SRC
+
+** Install Applications
+
+   Install the applications we defined earlier
+
+   #+BEGIN_SRC sh
+     for app in $APP_LIST; do
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+       sudo apt install -y $app
+   #+END_SRC
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
+       if [ "$( brew info --json=v1 $app | jq .[0].installed[].version )" == "" ]; then
+         echo "installing $app"
+         brew install $app
+       else
+         echo "$app installed"
+       fi
+   #+END_SRC
+
+   #+BEGIN_SRC sh
+     done
+   #+END_SRC
+
 ** Install Brew Cask Applications
 
    Install the apps we using regularly on MacOS
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
-     CASK_LIST="1password-beta alfred arq balenaetcher flux firefox-nightly firefox-beta firefox-developer-edition gitify gpg-suite-nightly iterm2-nightly keepassxc libreoffice private-internet-access razer-synapse riot setapp slack-beta spotify standard-notes tresorit virtualbox virtualbox-extension-pack xquartz zoomus"
      for app in $CASK_LIST; do
        if [ ! "$( brew cask list | grep $app )" ]; then
          echo "$app not installed"
