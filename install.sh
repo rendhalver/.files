@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 # Author: Aaron Kuehler
 # Purpose: Install the dotfiles
 
@@ -12,6 +12,29 @@ function bootstrap() {
         fi
         brew update
         brew tap homebrew/cask-versions
+        # install bash and bash-completion
+        if [ "$( brew info --json=v1 bash | jq .[0].installed[].version )" == "" ]; then
+            echo "installing bash"
+            brew install bash
+        else
+            echo "bash already installed"
+        fi
+        if [ "$( brew info --json=v1 bash-completion | jq .[0].installed[].version )" == "" ]; then
+            echo "installing bash-completion"
+            brew install bash-completion
+        else
+            echo "bash-completion already installed"
+        fi
+        # add new bash to accepted shells
+        if [ ! "$( grep "/\usr\/local\/bin\/bash" /etc/shells )" ]; then
+            echo "adding new bash to accepted shells"
+            echo "/usr/local/bin/bash" > sudo cat - > /etc/shells
+        fi
+        # set our shell to the newer bash
+        if [ ! "$SHELL" == "/usr/local/bin/bash" ]; then
+            echo "changing shell for ${LOGNAME}"
+            sudo dscl . -create /Users/$LOGNAME UserShell /usr/local/bin/bash
+        fi
         # install emacs if it's not installed
         if [ "$( brew info --json=v1 emacs | jq .[0].installed[].version )" == "" ]; then
             brew install emacs
