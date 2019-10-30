@@ -58,11 +58,11 @@ function bootstrap() {
         done
     else
         # install emacs if it's not installed
-        if [ -x "$(command -v emacs)" ]; then
+        if [ ! "$(command -v emacs)" ]; then
             sudo apt install emacs
         fi
         # Install git so we can checkout our repo
-        if [ -x "$(command -v git)" ]; then
+        if [ ! "$(command -v git)" ]; then
             sudo apt install git
         fi
     fi
