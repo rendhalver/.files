@@ -98,7 +98,7 @@ Setup and maintain software on my various laptops
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
      APP_LIST="${BASE_APP_LIST} mysql-client exercism terraform kubernetes-cli kubernetes-helm kubectx helmfile etcd"
-     CASK_LIST="1password-beta alfred arq balenaetcher flux firefox-nightly firefox-beta firefox-developer-edition gitify gpg-suite-nightly iterm2-nightly keepassxc libreoffice private-internet-access razer-synapse riot setapp slack-beta spotify standard-notes tresorit virtualbox virtualbox-extension-pack xquartz zoomus"
+     CASK_LIST="1password-beta alfred arq balenaetcher bitwarden flux firefox-nightly firefox-beta firefox-developer-edition gitify gpg-suite-nightly iterm2-nightly keepassxc libreoffice private-internet-access razer-synapse riot setapp slack-beta spotify standard-notes tresorit virtualbox virtualbox-extension-pack xquartz zoomus"
    #+END_SRC
 
 ** Install Applications
