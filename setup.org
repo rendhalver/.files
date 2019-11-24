@@ -94,6 +94,7 @@ Setup and maintain software on my various laptops
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
      APP_LIST="${BASE_APP_LIST} default-mysql-client"
+     SNAP_LIST="bitwarden firefox slack spotify"
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
@@ -123,6 +124,20 @@ Setup and maintain software on my various laptops
    #+END_SRC
 
    #+BEGIN_SRC sh
+     done
+   #+END_SRC
+
+** Install Snap Applications
+
+   Install the Snap apps we using regularly on Linux
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     for app in $SNAP_LIST; do
+       if [ ! "$( snap list | grep $app )" ]; then
+         echo "$app not installed"
+         echo "installing $app"
+         sudo snap install $app
+       fi
      done
    #+END_SRC
 

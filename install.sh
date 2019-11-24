@@ -65,6 +65,12 @@ function bootstrap() {
         if [ ! "$(command -v git)" ]; then
             sudo apt install -y  git
         fi
+        # install snap
+        if [ ! "$(command -v snap)" ]; then
+            sudo apt install -y snapd
+            sudo systemctl enable --now snapd.socket
+        fi
+
     fi
 
 }
