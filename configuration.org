@@ -44,7 +44,7 @@ Shell and CLI Tooling configuration
     MacTex doesn't put it's binaries in a useful path.
     This just adds that path to our PATH
 
-    #+BEGIN_SRC sh
+    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "~/.bashrc")
       export PATH=$PATH:/usr/local/texlive/2019/bin/x86_64-darwin
     #+END_SRC
 
@@ -403,7 +403,7 @@ Shell and CLI Tooling configuration
 
 ** Bash Completion
 
-   #+BEGIN_SRC sh
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "~/.bashrc")
      HOMEBREW_PREFIX=$(brew --prefix)
      if type brew &>/dev/null; then
        if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]; then
