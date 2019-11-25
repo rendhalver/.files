@@ -253,6 +253,6 @@ Setup and maintain software on my various laptops
        echo "installing kind version $KIND_VERSION"
        curl -Lo /tmp/kind-${KIND_VERSION} https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${OS_TYPE}
        chmod +x /tmp/kind-${KIND_VERSION}
-       mv /tmp/kind-${KIND_VERSION} /usr/local/bin/kind
+       mv /tmp/kind-${KIND_VERSION} ${HOME}/bin/kind
      fi
    #+END_SRC
