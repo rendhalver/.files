@@ -199,14 +199,11 @@ Setup and maintain software on my various laptops
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     if [ -e /etc/apt/sources.list.d/docker.list ]; then
-       echo "docker repo already setup"
+     if [ $(which docker) ]; then
+       echo "docker already installed"
      else
-       echo "installing docker"
-       sudo apt-get remove docker docker-engine docker.io containerd runc
-       curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-       echo "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" > sudo cat - > /apt/sources.list.d/docker.list
-       sudo apt install -y docker-ce docker-ce-cli containerd.io
+       echo "Installing docker"
+       sudo apt install -y docker.io docker-compose
        sudo usermod -aG docker $USER
      fi
    #+END_SRC
