@@ -52,7 +52,7 @@ Setup and maintain software on my various laptops
    Define the list of dependencies we need for each platform
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     DEP_LIST="$GLOBAL_DEP_LIST libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev"
+     DEP_LIST="$GLOBAL_DEP_LIST libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev phantomjs inkscape"
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
@@ -93,8 +93,9 @@ Setup and maintain software on my various laptops
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     APP_LIST="${BASE_APP_LIST} default-mysql-client"
-     SNAP_LIST="bitwarden firefox slack spotify"
+     APP_LIST="${BASE_APP_LIST} default-mysql-client maven openjdk-11-jdk nvidia-openjdk-8-jre python3 python3-pip gnupg gpg pass"
+     SNAP_LIST=""
+     PIP_LIST="ansible openshift"
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
@@ -155,6 +156,20 @@ Setup and maintain software on my various laptops
      done
    #+END_SRC
 
+** Install Pip Applications
+
+   Install the Pip apps we using regularly on Linux
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     for app in $PIP_LIST; do
+       if [ ! "$( pip3 list | grep $app )" ]; then
+         echo "$app not installed"
+         echo "installing $app"
+         sudo pip3 install $app
+       fi
+     done
+   #+END_SRC
+
 ** Install Keybase
 
    Install Keybase
@@ -176,6 +191,35 @@ Setup and maintain software on my various laptops
        sudo dpkg -i keybase_amd64.deb
        sudo apt-get install -f
        run_keybase
+     fi
+   #+END_SRC
+
+** Install Other Linux Applications
+
+*** Install Zoom
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     if [ $(which zoom) ]; then
+       echo "zoom already installed"
+     else
+       echo "installing zoom"
+       curl --remote-name https://zoom.us/client/latest/zoom_amd64.deb
+       sudo dpkg -i zoom_amd64.deb
+       sudo apt-get install -f
+     fi
+   #+END_SRC
+
+*** Install Spotify
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     if [ $(which spotify) ]; then
+       echo "spotify already installed"
+     else
+       echo "installing spotify"
+       curl -sS https://download.spotify.com/debian/pubkey.gpg | sudo apt-key add -
+       echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+       sudo apt-get update
+       sudo apt-get install spotify-client
      fi
    #+END_SRC
 
