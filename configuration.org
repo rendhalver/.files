@@ -497,6 +497,15 @@ Shell and CLI Tooling configuration
      fi
    #+END_SRC
 
+** Java settings
+
+   Setup JAVA_HOME
+
+   #+BEGIN_SRC conf
+     ## set Java_home
+     export JAVA_HOME="/usr/lib/jvm/default-java"
+   #+END_SRC
+
 * bash_profile
   :PROPERTIES:
   :header-args: :tangle ~/.bash_profile
