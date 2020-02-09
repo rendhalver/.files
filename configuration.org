@@ -489,12 +489,11 @@ Shell and CLI Tooling configuration
      export DISABLE_DEPARTURE=1
    #+END_SRC
 
-** Kubernetes
+** Load Work credentials
 
-   Source in the Kube configurations
    #+BEGIN_SRC sh
-     if [ -f ~/credentials/.kube ]
-     then source ~/credentials/.kube
+     if [ -f ~/credentials/.work ]
+       then source ~/credentials/.kube
      fi
    #+END_SRC
 
