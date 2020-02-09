@@ -102,6 +102,12 @@ Shell and CLI Tooling configuration
      alias gl='git log --graph --oneline --decorate --max-count 10'
    #+END_SRC
 
+   =glf= shows the log history for a patchspec
+
+   #+BEGIN_SRC sh
+     alias glf='git log --follow -p'
+   #+END_SRC
+
 *** Kube aliases
 
    Setup k as an alias for kubectl
@@ -414,6 +420,17 @@ Shell and CLI Tooling configuration
          done
        fi
      fi
+   #+END_SRC
+
+  #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "~/.bashrc")
+    # enable bash completion in interactive shells
+    if ! shopt -oq posix; then
+      if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+      elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+      fi
+    fi
    #+END_SRC
 
 ** ASDF Version Manager
