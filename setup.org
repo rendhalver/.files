@@ -284,7 +284,7 @@ Setup and maintain software on my various laptops
    Make sure Kind is installed so we can run a local Kubernetes cluster
 
    #+BEGIN_SRC sh
-     KIND_VERSION='v0.5.1'
+     KIND_VERSION='v0.7.0'
      if [ $( which kind ) ]; then
          INSTALLED_KIND=$( kind version )
      else
