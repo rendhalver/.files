@@ -493,7 +493,7 @@ Shell and CLI Tooling configuration
 
    #+BEGIN_SRC sh
      if [ -f ~/credentials/.work ]
-       then source ~/credentials/.kube
+       then source ~/credentials/.work
      fi
    #+END_SRC
 
