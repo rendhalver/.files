@@ -492,8 +492,8 @@ Shell and CLI Tooling configuration
 ** Load Work credentials
 
    #+BEGIN_SRC sh
-     if [ -f ~/credentials/.work ]
-       then source ~/credentials/.work
+     if [ -f ~/credentials/.work ]; then
+       source ~/credentials/.work
      fi
    #+END_SRC
 
