@@ -57,20 +57,18 @@ function bootstrap() {
           fi
         done
     else
+        # install flatpak if it's not installed
+        if [ ! "$(command -v flatpak)" ]; then
+            sudo apt install -y flatpak plasma-discover-backend-flatpak
+        fi
         # install emacs if it's not installed
-        if [ ! "$(command -v emacs)" ]; then
-            sudo apt install -y emacs
+        if [ ! "$( flatpak list | grep emacs)" ]; then
+            sudo flatpak install -y org.gnu.emacs
         fi
         # Install git so we can checkout our repo
         if [ ! "$(command -v git)" ]; then
             sudo apt install -y  git
         fi
-        # install snap
-        if [ ! "$(command -v snap)" ]; then
-            sudo apt install -y snapd
-            sudo systemctl enable --now snapd.socket
-        fi
-
     fi
 
 }

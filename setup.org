@@ -93,9 +93,9 @@ Setup and maintain software on my various laptops
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     APP_LIST="${BASE_APP_LIST} default-mysql-client maven openjdk-11-jdk nvidia-openjdk-8-jre python3 python3-pip gnupg gpg pass"
-     SNAP_LIST=""
-     PIP_LIST="ansible openshift"
+     APP_LIST="${BASE_APP_LIST} default-mysql-client firejail maven openjdk-11-jdk nvidia-openjdk-8-jre python3 python3-pip gnupg gpg pass"
+     FLATPAK_LIST="org.mozilla.FirefoxDevEdition org.mozilla.FirefoxNightly"
+     PIP_LIST=""
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
@@ -128,16 +128,16 @@ Setup and maintain software on my various laptops
      done
    #+END_SRC
 
-** Install Snap Applications
+** Install Flatpak Applications
 
-   Install the Snap apps we using regularly on Linux
+   Install the Flatpak apps we using regularly on Linux
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     for app in $SNAP_LIST; do
-       if [ ! "$( snap list | grep $app )" ]; then
+     for app in $FLATPAK_LIST; do
+       if [ ! "$( flatpak list | grep $app )" ]; then
          echo "$app not installed"
          echo "installing $app"
-         sudo snap install $app
+         sudo flatpak install $app
        fi
      done
    #+END_SRC

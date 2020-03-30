@@ -77,6 +77,14 @@ Shell and CLI Tooling configuration
     alias pbcopy='xclip -selection clipboard'
   #+END_SRC
 
+**** flatpak emacs
+
+  Alias for the flatpak version of emacs
+
+  #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "~/.bashrc")
+    alias emacs='/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=emacs --file-forwarding org.gnu.emacs @@ %F @@'
+  #+END_SRC
+
 **** rbenv
 
   Instantiate rbenv if it's installed
