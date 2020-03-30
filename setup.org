@@ -52,7 +52,7 @@ Setup and maintain software on my various laptops
    Define the list of dependencies we need for each platform
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
-     DEP_LIST="$GLOBAL_DEP_LIST libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev phantomjs inkscape"
+     DEP_LIST="$GLOBAL_DEP_LIST dnsutils rblcheck libreadline-dev libncurses-dev libssl-dev libyaml-dev libxslt-dev libffi-dev unixodbc-dev phantomjs inkscape"
    #+END_SRC
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'darwin) "yes")
