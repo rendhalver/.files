@@ -223,6 +223,72 @@ Setup and maintain software on my various laptops
      fi
    #+END_SRC
 
+*** Install Hyper Canary
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     HYPER_CANARY_VERSION='3.1.0-canary.4'
+     if [ -f $HOME/bin/Hyper-$HYPER_CANARY_VERSION.AppImage ]; then
+       echo "Hyper Canary already installed"
+     else
+       echo "installing Hyper Canary"
+       wget -q -O ${HOME}/bin/Hyper-${HYPER_CANARY_VERSION}.AppImage https://github.com/zeit/hyper/releases/download/v${HYPER_CANARY_VERSION}/Hyper-${HYPER_CANARY_VERSION}.AppImage
+       chmod +x $HOME/bin/Hyper-${HYPER_CANARY_VERSION}.AppImage
+       ln -f -s $HOME/bin/Hyper-${HYPER_CANARY_VERSION}.AppImage $HOME/bin/Hyper-Canary.AppImage
+     fi
+   #+END_SRC
+
+**** Hyper Canary desktop file
+   :PROPERTIES:
+   :header-args: :tangle ~/.local/share/applications/hyper-canary.desktop :mkdirp yes
+   :END:
+
+   Create Hyper Canary Desktop config
+
+   #+BEGIN_SRC conf
+     [Desktop Entry]
+     Name=Hyper Canary
+     Comment=A terminal built on web technologies
+     Exec=Hyper-Canary.AppImage %U
+     Terminal=false
+     Type=Application
+     Icon=hyper
+     StartupWMClass=Hyper
+     Categories=TerminalEmulator;
+   #+END_SRC
+
+*** Install Standard Notes
+
+   #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
+     STANDARD_NOTES_VERSION='3.3.3'
+     if [ -f $HOME/bin/Standard-Notes-$STANDARD_NOTES_VERSION.AppImage ]; then
+       echo "Standard Notes already installed"
+     else
+       echo "Installing Standard Notes $STANDARD_NOTES_VERSION"
+       wget -q -O ${HOME}/bin/Standard-Notes-${STANDARD_NOTES_VERSION}.AppImage https://github.com/standardnotes/desktop/releases/download/v${STANDARD_NOTES_VERSION}/Standard-Notes-${STANDARD_NOTES_VERSION}.AppImage
+       chmod +x $HOME/bin/Standard-Notes-$STANDARD_NOTES_VERSION.AppImage
+       ln -s -f $HOME/bin/Standard-Notes-$STANDARD_NOTES_VERSION.AppImage $HOME/bin/Standard-Notes.AppImage
+     fi
+   #+END_SRC
+
+**** Standard Notes desktop file
+   :PROPERTIES:
+   :header-args: :tangle ~/.local/share/applications/standard-notes.desktop :mkdirp yes
+   :END:
+
+   Create Hyper Canary Desktop config
+
+   #+BEGIN_SRC conf
+     [Desktop Entry]
+     Name=Standard Notes
+     Exec=firejail --noprofile Standard-Notes.AppImage
+     Terminal=false
+     Type=Application
+     Icon=standard-notes
+     StartupWMClass=standard notes
+     Comment=A simple and private place for your notes, thoughts, and life’s work.
+     Categories=Office;
+   #+END_SRC
+
 ** Install Docker
 
    Make sure we have Docker installed
@@ -284,19 +350,35 @@ Setup and maintain software on my various laptops
    Make sure Kind is installed so we can run a local Kubernetes cluster
 
    #+BEGIN_SRC sh
-     KIND_VERSION='v0.7.0'
-     if [ $( which kind ) ]; then
-         INSTALLED_KIND=$( kind version )
-     else
-         INSTALLED_KIND=''
-     fi
-
-     if [ "$INSTALLED_KIND" == "$KIND_VERSION" ]; then
+     KIND_VERSION='0.7.0'
+     if [ -f $HOME/bin/kind-$KIND_VERSION ]; then
        echo "kind $KIND_VERSION already installed"
      else
        echo "installing kind version $KIND_VERSION"
-       curl -Lo /tmp/kind-${KIND_VERSION} https://github.com/kubernetes-sigs/kind/releases/download/${KIND_VERSION}/kind-${OS_TYPE}
-       chmod +x /tmp/kind-${KIND_VERSION}
-       mv /tmp/kind-${KIND_VERSION} ${HOME}/bin/kind
+       wget -q -O ${HOME}/bin/kind-${KIND_VERSION} https://github.com/kubernetes-sigs/kind/releases/download/v${KIND_VERSION}/kind-${OS_TYPE}
+       chmod +x ${HOME}/bin/kind-${KIND_VERSION}
+       ln -s -f $HOME/bin/kind-${KIND_VERSION} $HOME/bin/kind
      fi
+     #   $ kind completion bash > ~/.kind-completion
+     #   $ source ~/.kind-completion
+   #+END_SRC
+
+** Install Kubectl
+
+   Make sure the Kubectl is installed so we can run interact with our Kubernetes clusters
+
+   #+BEGIN_SRC sh
+     KUBECTL_VERSION='1.14.10'
+     if [ -f ${HOME}/bin/kubectl-${KUBECTL_VERSION} ]; then
+       echo "kubectl $KUBECTL_VERSION already installed"
+     else
+       echo "installing kubectl version $KUBECTL_VERSION"
+       wget -q -O $HOME/bin/kubectl-${KUBECTL_VERSION} https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl
+       chmod +x ${HOME}/bin/kubectl-${KUBECTL_VERSION}
+       ln -s -f ${HOME}/bin/kubectl-${KUBECTL_VERSION} ${HOME}/bin/kubectl
+     fi
+     ## Write bash completion code to a file and source if from .bash_profile
+     #kubectl completion bash > ~/.kube/completion.bash.inc
+     # Kubectl shell completion
+     #source '$HOME/.kube/completion.bash.inc'
    #+END_SRC
