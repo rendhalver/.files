@@ -94,7 +94,7 @@ Setup and maintain software on my various laptops
 
    #+BEGIN_SRC sh :tangle (when (eq system-type 'gnu/linux) "yes")
      APP_LIST="${BASE_APP_LIST} default-mysql-client firejail maven openjdk-11-jdk nvidia-openjdk-8-jre python3 python3-pip gnupg gpg pass"
-     FLATPAK_LIST="org.mozilla.FirefoxDevEdition org.mozilla.FirefoxNightly com.spotify.Client com.slack.Slack us.zoom.Zoom"
+     FLATPAK_LIST="com.bitwarden org.mozilla.FirefoxDevEdition org.mozilla.FirefoxNightly com.spotify.Client com.slack.Slack us.zoom.Zoom"
      PIP_LIST=""
    #+END_SRC
 
